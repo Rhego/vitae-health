@@ -1,0 +1,30 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: >-
+ Vita-health infrastructure
+Parameters:
+  Prefix:
+    Type: String
+    Description: Prefix used by all the infrastructure
+    Default: dev
+  VPCIPv4CidrBlock:
+    Description: VPC CIDR block for IPv4. Default of 10.0.0.0/16 is recommended for testing.
+    Type: String
+    Default: 10.0.0.0/16
+  VPCSubnetIPv4Size:
+    Description: Host bit mask length of each subnet, e.g. default of 8 will be a /24 subnet size.
+    Type: Number
+    Default: 8
+Resources:
+   VPC:
+    Type: 'AWS::EC2::VPC'
+    Properties:
+      CidrBlock: !Ref VPCIPv4CidrBlock
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      InstanceTenancy: default
+      Tags:
+        - Key: Name
+          Value: !Join
+            - '-'
+            - - !Ref Prefix
+              - VPC    
