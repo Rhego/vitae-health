@@ -665,9 +665,12 @@
                 "InstanceType": {
                     "Ref": "InstanceType"
                 },
-                "SecurityGroupIds": [
+                "NetworkInterfaces": [
                     {
-                        "Ref": "WebServerSecurityGroup"
+                        "SubnetId": {"Ref": "PublicSubnet1"},
+                        "AssociatePublicIpAddress": "true",
+                        "DeviceIndex": "0",
+                        "GroupSet": [{ "Ref" : "WebServerSecurityGroup" }]
                     }
                 ],
                 "KeyName": {
