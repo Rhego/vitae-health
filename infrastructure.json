@@ -189,8 +189,32 @@
                 }
             }
         },
-        "Resources": {
-            "myInternetGateway": {
+    "Resources": {
+        "VPC": {
+            "Type": "AWS::EC2::VPC",
+            "Properties": {
+                "CidrBlock": [{"Ref" : "VPCIPv4CidrBlock"}],
+                "EnableDnsSupport": "true",
+                "EnableDnsHostnames": "true",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Join": [
+                                "",
+                                [
+                                    "VPC - VitaeHealth - ",
+                                    {
+                                        "Ref": "Prefix"
+                                    }
+                                ]
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "InternetGateway": {
                 "Type": "AWS::EC2::InternetGateway",
                 "Properties": {
                     "Tags": [
@@ -200,7 +224,7 @@
                                 "Fn::Join": [
                                     "",
                                     [
-                                        "VitaeHealth - ",
+                                        "IGW - VitaeHealth - ",
                                         {
                                             "Ref": "Prefix"
                                         }
@@ -212,6 +236,13 @@
                 }
             }
         },
+        "AttachGateway" : {
+            "Type" : "AWS::EC2::VPCGatewayAttachment",
+            "Properties" : {
+               "VpcId" : { "Ref" : "VPC" },
+               "InternetGatewayId" : { "Ref" : "InternetGateway" }
+             }
+         },
         "WebServerInstance": {
             "Type": "AWS::EC2::Instance",
             "Metadata": {
@@ -571,7 +602,10 @@
                             "Ref": "SSHLocation"
                         }
                     }
-                ]
+                ],
+                "VpcId": {
+                    "Ref": "VpcId"
+                }
             }
         }
     },
