@@ -805,7 +805,12 @@
                 "Protocol": "HTTP",
                 "UnhealthyThresholdCount": 5,
                 "TargetType": "instance",
-                "Targets": {"Ref": "WebServerInstance"},
+                "Targets": [
+                    {          
+                        "Id" :{"Ref": "WebServerInstance"}
+        
+                    }
+                ],
                 "VpcId": {
                     "Ref": "VPC"
                 },
