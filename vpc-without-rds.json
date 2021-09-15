@@ -622,6 +622,7 @@
             "Type": "AWS::EC2::Instance",
             "Metadata": {
                 "AWS::CloudFormation::Init": {
+                    
                     "configSets": {
                         "InstallAndRun": [
                             "Install"
@@ -634,7 +635,14 @@
                                 "php": [],
                                 "php-mysql": []
                             }
+                               
                         },
+                        "commands": {
+                            "create_new_dir":{
+                                "command": "mkdir -p /var/www/html/docker/"
+                            }
+                        },
+                    
                         "files": {
                             "/var/www/html/docker/index.php": {
                                 "content": {
@@ -858,6 +866,7 @@
             "Type": "AWS::EC2::Instance",
             "Metadata": {
                 "AWS::CloudFormation::Init": {
+                   
                     "configSets": {
                         "InstallAndRun": [
                             "Install"
@@ -869,6 +878,12 @@
                                 "httpd": [],
                                 "php": [],
                                 "php-mysql": []
+                            }
+                            
+                        },
+                        "commands": {
+                            "create_new_dir":{
+                                "command": "mkdir -p /var/www/html/docker/"
                             }
                         },
                         "files": {
@@ -1347,7 +1362,7 @@
     },
     
     "Outputs" : {
-        "BackupLoadBalancerDNSName" : {
+        "ApplicationLoadBalancerDNSName" : {
           "Description": "The DNSName of the load balancer",  
           "Value" : { "Fn::GetAtt" : [ "ApplicationLoadBalancer", "DNSName" ]}
         },
